@@ -4,9 +4,9 @@
   align-items: center;
 
   width: 100vw;
-  height: auto;
+  height: 100vh;
   background: var(--primary-color);
-  position: absolute;
+
 
   font-family: var(--font-base);
   color: var(--third-color)

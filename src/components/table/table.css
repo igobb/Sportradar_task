@@ -1,0 +1,27 @@
+.table__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.table__container-dropdown {
+    margin-bottom: 1rem;
+}
+
+#dropdown-basic {
+    padding: 0.5rem 2rem;
+}
+
+.table>thead {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.table-responsive {
+    max-height: 600px;
+}
+
+

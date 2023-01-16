@@ -1,19 +1,39 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import './table.css'
 
 import Table from 'react-bootstrap/Table';
-
-const api =
-    "https://cors-anywhere.herokuapp.com/https://api.sportradar.us/soccer/trial/v4/en/seasons/sr:season:77453/schedules.json?api_key=cwy2c5a7sxaeyjspgucjtkgz";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownItem from "react-bootstrap/DropdownItem";
+import {logDOM} from "@testing-library/react";
 
 export default function TableWithData() {
-    const [data, setData] = useState([]);
+    const [dataSchedule, setDataSchedule] = useState([]);
+    const [dataSeasons, setDataSeasons] = useState([]);
+    const [whichSeason, setWhichSeason] = useState('sr:season:77453')
+    const [refreshData, setRefreshData] = useState(false);
+
+    const apiSeasonSchedule =
+        `https://cors-anywhere.herokuapp.com/https://api.sportradar.us/soccer/trial/v4/en/seasons/${whichSeason}/schedules.json?api_key=cwy2c5a7sxaeyjspgucjtkgz`;
+
+    const apiCompetitionSeasons = "https://cors-anywhere.herokuapp.com/https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz";
 
     useEffect(() => {
         axios
-            .get(api)
+            .get(apiSeasonSchedule)
             .then((res) => {
-                setData(res.data.schedules);
+                setDataSchedule(res.data.schedules);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [refreshData]);
+
+    useEffect(() => {
+        axios
+            .get(apiCompetitionSeasons)
+            .then((res) => {
+                setDataSeasons(res.data.seasons);
             })
             .catch((err) => {
                 console.log(err);
@@ -38,9 +58,27 @@ export default function TableWithData() {
         }
     };
 
+    console.log(dataSeasons)
     return (
-
-        <div>
+        <div className="table__container">
+            <Dropdown className="table__container-dropdown">
+                <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                    Seasons
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    {dataSeasons.map((item) => {
+                        return (
+                            <Dropdown.Item
+                                onClick={() => {whichSeason && setWhichSeason(item.id);
+                                     setRefreshData(!refreshData)}}
+                                key={item.id}
+                            >
+                                {item.name}
+                            </Dropdown.Item>
+                        )
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
             <Table bordered hover variant="dark" responsive>
                 <thead>
                     <tr>
@@ -57,8 +95,8 @@ export default function TableWithData() {
                         <th>Match date</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {data.map((data) => {
+                <tbody className='tbody'>
+                    {dataSchedule.map((data) => {
                         const {
                             sport_event: { competitors, start_time, venue },
                             sport_event_status: { home_score, away_score, status, period_scores},
