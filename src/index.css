@@ -1,12 +1,10 @@
 :root {
   --font-base: "Roboto", sans-serif;
 
-  --primary-color: #E0E2DB;
-  --secondary-color: #D2D4C8;
-  --third-color: #8B2635;
-  --text-color: #2E3532;
-  --black-color: #030303;
-  --lightGray-color: #e4e4e4;
+  --primary-color: #b0b0b0;
+  --secondary-color: #434242;
+  --third-color: #5CB8E4;
+  --black-color: #212529;
   --gray-color: #6b7688;
   --white-color: #ffffff;
 }

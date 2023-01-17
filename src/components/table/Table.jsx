@@ -55,20 +55,20 @@ export default function TableWithData() {
                     console.log(error)
                 }
             });
-    }, []);
+    }, [refreshData]);
 
     const colorForEachTeam = (homeScore, awayScore) => {
         if (homeScore || awayScore) {
             if (homeScore > awayScore) {
-                return { homeTeamColor: "green", awayTeamColor: "red" };
+                return { homeTeamColor: "#367E18", awayTeamColor: "#CF0A0A" };
             } else if (homeScore < awayScore) {
-                return { homeTeamColor: "red", awayTeamColor: "green" };
+                return { homeTeamColor: "#CF0A0A", awayTeamColor: "#367E18" };
             } else if (homeScore === awayScore) {
-                return { homeTeamColor: "orange", awayTeamColor: "orange" };
+                return { homeTeamColor: "#EB5E0B", awayTeamColor: "#EB5E0B" };
             }
         } else {
                 if (homeScore === 0 && awayScore === 0) {
-                    return { homeTeamColor: "orange", awayTeamColor: "orange" };
+                    return { homeTeamColor: "#EB5E0B", awayTeamColor: "#EB5E0B" };
                 } else {
                     return 0;
                 }
@@ -99,50 +99,51 @@ export default function TableWithData() {
                                 })}
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Table bordered hover variant="dark" responsive>
-                            <thead>
-                            <tr>
-                                <th>Stadium name</th>
-                                <th colSpan={2}>
-                                    <div className="justify-content-between d-flex">
-                                        <span>Team Home</span>
-                                        <span>vs</span>
-                                        <span>Team Away</span>
-                                    </div>
-                                </th>
-                                <th>Result</th>
-                                <th>Half time result</th>
-                                <th>Match date</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody className='tbody'>
-                            {dataSchedule.map((data) => {
-                                const {
-                                    sport_event: { competitors, start_time, venue },
-                                    sport_event_status: { home_score, away_score, status, period_scores},
-                                } = data;
-                                return (
+                        <div className='table__container-wrapper'>
+                            <Table hover responsive variant='dark'>
+                                <thead style={{position: "sticky", top: '0'}}>
+                                <tr>
+                                    <th>Stadium name</th>
+                                    <th colSpan={2}>
+                                        <div className="justify-content-between d-flex">
+                                            <span>Team Home</span>
+                                            <span>vs</span>
+                                            <span>Team Away</span>
+                                        </div>
+                                    </th>
+                                    <th>Result</th>
+                                    <th>Half time</th>
+                                    <th>Match date</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody className='tbody'>
+                                {dataSchedule.map((data) => {
+                                    const {
+                                        sport_event: { competitors, start_time, venue },
+                                        sport_event_status: { home_score, away_score, status, period_scores},
+                                    } = data;
+                                    return (
                                         <tr key={data.sport_event.id}>
                                             <td>
                                                 {venue.name}
                                             </td>
-                                            <td style={{backgroundColor: colorForEachTeam(home_score, away_score).homeTeamColor}}>
+                                            <td style={{backgroundColor: colorForEachTeam(home_score, away_score).homeTeamColor, fontWeight: '600'}}>
                                                 {competitors[0].name}
                                             </td>
-                                            <td style={{backgroundColor: colorForEachTeam(home_score, away_score).awayTeamColor}}>
+                                            <td style={{backgroundColor: colorForEachTeam(home_score, away_score).awayTeamColor, fontWeight: '600'}}>
                                                 {competitors[1].name}
                                             </td>
-                                            <td>
-                                                {status === "postponed" ? status : `${home_score} : ${away_score}`
+                                            <td style={{textAlign: 'center', fontWeight: '600'}}>
+                                                {status === "postponed" ? status : `${home_score} - ${away_score}`
                                                 }
                                             </td>
                                             {period_scores ? (
-                                                <td>
+                                                <td style={{textAlign: 'center'}}>
                                                     {period_scores[0].home_score} - {period_scores[1].away_score}
                                                 </td>
                                             ) : (
-                                                <td>{status}</td>
+                                                <td style={{textAlign: 'center'}}>-</td>
                                             )
 
 
@@ -155,10 +156,11 @@ export default function TableWithData() {
                                             </td>
                                         </tr>
 
-                                );
-                            })}
-                            </tbody>
-                        </Table>
+                                    );
+                                })}
+                                </tbody>
+                            </Table>
+                        </div>
                     </div>
                 </>
                 :
@@ -168,10 +170,11 @@ export default function TableWithData() {
                                 <h1>Sorry, we have a problem...</h1>
                                 <p>{errorData?.message}</p>
                             </>: null
-                           }
+                        }
                     </div>
                 }
-            </>}
+            </>
+        }
         </>
     );
 }

@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {Link, useLocation} from 'react-router-dom';
 import axios from "axios";
-import './MatchInfo.css';
+import './MatchInfo.css'
 import Table from 'react-bootstrap/Table';
 
 const MatchInfo = (props) => {
     const [matchData, setMatchData] = useState(null);
     const [matchStatus, setMatchStatus] = useState(null);
     const [timeline, setTimeline] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [errorData, setErrorData] = useState(null);
     const location = useLocation();
     const data = location.state?.data;
@@ -22,6 +23,7 @@ const MatchInfo = (props) => {
                 setMatchData(res.data.sport_event);
                 setMatchStatus(res.data.sport_event_status)
                 setTimeline(res.data.timeline)
+                setLoading(false)
             })
             .catch((error) => {
                 setErrorData(error)
@@ -33,49 +35,81 @@ const MatchInfo = (props) => {
                 }
             });
     }, []);
-    console.log(matchData)
-    console.log(matchStatus)
-    console.log(timeline)
 
     return (
         <>
-            {matchData ? <>
-                <div className='match-info__container'>
-                    <div>
-                        <h1><Link className="match-info__link" to="/">Return to home page</Link></h1>
-                    </div>
-                    <div className="match-info__data">
-                        <h2>Match Info</h2>
-                        <p>Match beetwen {matchData.competitors[0].name} (Home) vs. {matchData.competitors[1].name} (Away) - {matchStatus.match_status}</p>
-                        <div className="match-info__result">
-                            <span className="result">{matchStatus.home_score} : {matchStatus.away_score}</span>
-                        </div>
-                        <div className="match-info__timeline">
-                            <h1>Match minute by minute</h1>
-                            <Table striped bordered hover responsive>
-                                <thead>
-                                    <tr>
-                                        <th>Minute</th>
-                                        <th>Event</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {timeline.map((event) => {
-                                        return (
-                                            <tr>
-                                                <td>{event.match_time ? event.match_time + '\'' : event.time.slice(11, 16)}</td>
-                                                <td>{ event.type.replace('_', ' ').replace('_', ' ') }</td>
-                                            </tr>
-                                        )
-                                    })
+            {loading ? <h1>Loading...</h1> : <>
+                {matchData ?
+                    <>
+                        <div className='match-info__container'>
+                            <div className='match-info__link-wrapper'>
+                                <Link className="match-info__link" to="/"><button className='match-info__link-button'>Return to home page</button></Link>
+                            </div>
+                            <div className="match-info__data">
+                                <div className="data-wrapper">
+                                    <div className='home'>
+                                        <span>{matchData.competitors[0].name}</span>
+                                        <p>(Home)</p>
+                                    </div>
+                                    {matchStatus.status === 'postponed' ?
+                                        <div className="match-info__postponed">
+                                            {matchStatus.status}
+                                            <span className="result"> - </span>
+                                            <p>{matchData.venue.name}</p>
+                                            <p>{matchData.sport_event_context.competition.name}</p>
+                                        </div>
+                                        :
+                                        <div className="match-info__result">
+                                            <span className="result">{matchStatus.home_score} - {matchStatus.away_score}</span>
+                                            <p>{matchData.venue.name}</p>
+                                            <p>{matchData.start_time.slice(0, 10)}</p>
+                                            <p>{matchData.sport_event_context.competition.name}</p>
+                                        </div>
                                     }
-                                </tbody>
-                            </Table>
+                                    <div className="away">
+                                        <span>{matchData.competitors[1].name}</span>
+                                        <p>(Away)</p>
+                                    </div>
+                                </div>
+                                {matchStatus.status === 'postponed' ? null :
+                                    <div className="match-info__timeline">
+                                        <h2>Match minute by minute</h2>
+                                        <Table striped bordered hover responsive variant='dark'>
+                                            <thead>
+                                            <tr>
+                                                <th>Minute</th>
+                                                <th>Event</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {timeline.map((event) => {
+                                                return (
+                                                    <tr>
+                                                        <td>{event.match_time ? event.match_time + '\'' : event.time.slice(11, 16)}</td>
+                                                        <td>{ event.type.replace('_', ' ').replace('_', ' ') }</td>
+                                                    </tr>
+                                                )
+                                            })
+                                            }
+                                            </tbody>
+                                        </Table>
+                                    </div>
+                                }
+                            </div>
                         </div>
+                    </>
+                    :
+                    <div className="error">
+                        {errorData ?
+                            <>
+                                <h1>Sorry, we have a problem...</h1>
+                                <p>{errorData?.message}</p>
+                            </>: null
+                        }
                     </div>
-
-                </div>
-            </> : null}
+                }
+            </>
+            }
         </>
     );
 };

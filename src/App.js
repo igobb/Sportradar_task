@@ -3,8 +3,7 @@ import TableWithData from './components/table/Table'
 import MatchInfo from './pages/match_info/MatchInfo'
 import ErrorPage from "./pages/error_page/ErrorPage";
 
-import {BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom'
-
+import {BrowserRouter as Router,Routes, Route} from 'react-router-dom'
 
 function App() {
   return (
