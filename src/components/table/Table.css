@@ -16,12 +16,24 @@
 }
 
 .table>thead {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     text-align: center;
 }
 
 .table-responsive {
     max-height: 600px;
+}
+
+.error {
+    display: flex;
+    flex-direction: column;
+}
+
+.table__link {
+    /*color: white !important;*/
+    /*text-decoration: none !important;*/
+    all: inherit !important;
+
 }
 
 
