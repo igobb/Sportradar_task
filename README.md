@@ -1,70 +1,117 @@
-# Getting Started with Create React App
+# Sportradar recruitment task
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## About
+* [Introduction](#introduction)
+* [Technologies](#technologies-used)
+* [Setup](#setup)
+* [Project Status](#project-status)
+* [Contact](#contact)
 
-In the project directory, you can run:
 
-### `npm start`
+## Introduction
+That is my task for recruitment process.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<details>
+  <summary>Task description</summary>
+  
+Step 1: Display results table of Ekstraklasa 20/21 season
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+ 
+API:
+In your code, please use endpoint and parameters below:
+GET Season Schedule soccer/trial/v4/:language_code/seasons/:season_id/schedules:format 
+ :language_code – en 
+ :season_id - sr:season:77453 
+ 
+ 
+Description:
+·	Table should be divided into 2 columns
+·	In the first column display Team Names
+·	In the second column display result
+·	Commit your changes 
 
-### `npm test`
+ 
+Step 2: Display more information in the results table 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ 
+Description:
+·	Add new columns to your table with match date, half time score, and stadium name 
+·	Move team names into separate columns 
+·	Make team name cell background different depending on result
+o	Red – if team lost 
+o	Green – if team won
+o	Orange – if match ended in a draw
+·	 Commit your changes 
 
-### `npm run build`
+ 
+Step 3: Add season filter to results table 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ 
+Description:
+·	Add „Seasons” dropdown above results table
+·	Dropdown options should be fetched from the API:
+o	 GET Competition Seasons soccer/trial/v4/:language_code/competitions/:competition_id/seasons:format 
+ : language_code – en 
+ :competition_id - sr:competition:202 
+·	Or hardcoded:
+o	sr:season:67233 - Ekstraklasa 19/20 
+o	sr:season:77453 - Ekstraklasa 20/21 
+o	sr:season: 84320 - Ekstraklasa 21/22 
+·	Reload results table on dropdown change using endpoint from step 1
+·	Commit your changes
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ Step 4: Match info sub page 
+ 
+ 
+Description:
+·	When clicking on matches table row, user should be redirected to a new match info sub page
+·	Use endpoint below to fetch match info:
+o	GET Sport Event Timeline soccer/trial/v4/:language_code/sport_events/:sport_event_id/timeline:format 
+ :language_code – en 
+ :sport_event_id – you will find ID in the endpoint from Step 1
+·	On a subpage display data about a match, teams, result, and data in Timeline property 
+·	Use your CSS skills to display match data in a nice way
+·	Commit your changes
 
-### `npm run eject`
+ 
+Step 5: Add any new features by your choice
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Description:
+In this step you’re free to add whatever features you like, think about refactoring, style improvements, use of another endpoints, etc.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  
+</details>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Technologies Used
+* React
+* React Bootstrap
+* React Hooks
+* Axios for fetch API
+* Cors anywhere heroku app (https://cors-anywhere.herokuapp.com)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Setup
+To run this project, open this link (not available for now):
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+⭐ <a href="">Sportradar task</a> ⭐
 
-### Code Splitting
+or follow these steps:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Clone the repository to your local machine.
+2. Open the 'Sportradar_task' directory as a project in your IDE.
+3. In the terminal, enter one of the following commands:
 
-### Analyzing the Bundle Size
+```
+npm start
+npm run start-pc
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Project Status
+Project is: _complete_
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contact
+Created by [@IGoB](https://igobb-portfolio.netlify.app/) - feel free to contact me!
