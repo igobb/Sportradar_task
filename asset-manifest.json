@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Sportradar_task/static/css/main.bfb271c7.css",
+    "main.js": "/Sportradar_task/static/js/main.0720f4ee.js",
+    "index.html": "/Sportradar_task/index.html",
+    "main.bfb271c7.css.map": "/Sportradar_task/static/css/main.bfb271c7.css.map",
+    "main.0720f4ee.js.map": "/Sportradar_task/static/js/main.0720f4ee.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bfb271c7.css",
+    "static/js/main.0720f4ee.js"
+  ]
+}
