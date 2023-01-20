@@ -51,7 +51,7 @@
     max-width: 1400px;
 }
 
-.home, .away, .match-info__result, .match-info__postponed {
+.home, .away, .match-info__result, .match-info__postponed, .match-info__not-started {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -69,13 +69,17 @@
     color: var(--black-color)
 }
 
-.match-info__result>p, .match-info__postponed>p {
+.match-info__result>p, .match-info__postponed>p, .match-info__not-started>p {
     font-size: 1.2rem;
     padding: 0 .5rem;
     border-bottom: 1px solid var(--secondary-color);
 }
 
-.match-info__postponed {
+.not-started__p {
+    font-size: 1.5rem !important;
+}
+
+.match-info__postponed, .match-info__not-started {
     font-size: 2.5rem;
     padding: 0rem .5rem;
     color: var(--black-color)

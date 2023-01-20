@@ -4,13 +4,14 @@ import './Table.css'
 
 import Table from 'react-bootstrap/Table';
 import Dropdown from 'react-bootstrap/Dropdown';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 export default function TableWithData() {
     const [dataSchedule, setDataSchedule] = useState(null);
     const [dataSeasons, setDataSeasons] = useState(null);
     const [whichSeason, setWhichSeason] = useState('sr:season:77453')
     const [refreshData, setRefreshData] = useState(false);
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
     const [errorData, setErrorData] = useState()
@@ -57,24 +58,22 @@ export default function TableWithData() {
             });
     }, [refreshData]);
 
-    const colorForEachTeam = (homeScore, awayScore) => {
-        if (homeScore || awayScore) {
-            if (homeScore > awayScore) {
-                return { homeTeamColor: "#367E18", awayTeamColor: "#CF0A0A" };
-            } else if (homeScore < awayScore) {
-                return { homeTeamColor: "#CF0A0A", awayTeamColor: "#367E18" };
-            } else if (homeScore === awayScore) {
-                return { homeTeamColor: "#EB5E0B", awayTeamColor: "#EB5E0B" };
-            }
-        } else {
-                if (homeScore === 0 && awayScore === 0) {
-                    return { homeTeamColor: "#EB5E0B", awayTeamColor: "#EB5E0B" };
-                } else {
-                    return 0;
-                }
-        }
-    };
+    const handleGoToSubpage = (data) => {
+        navigate("/MatchInfo", {
+            state: {
+                data
+            },
+        });
+    }
 
+    const colorForEachTeam = (homeScore, awayScore) => {
+        if (!Number.isInteger(homeScore) || !Number.isInteger(awayScore)) return 0;
+        if (homeScore > awayScore) return { homeTeamColor: "#367E18", awayTeamColor: "#CF0A0A" };
+        if (homeScore < awayScore) return { homeTeamColor: "#CF0A0A", awayTeamColor: "#367E18" };
+        if (homeScore === awayScore) return { homeTeamColor: "#EB5E0B", awayTeamColor: "#EB5E0B" };
+        return 0;
+    }
+    console.log(dataSchedule)
     return (
         <>
         {loading ? <h1>Loading...</h1> :
@@ -99,6 +98,7 @@ export default function TableWithData() {
                                 })}
                             </Dropdown.Menu>
                         </Dropdown>
+                        <h1>Selected season: {whichSeason === 'sr:season:77453' ? '2020/2021' : whichSeason === 'sr:season:84320' ? '2021/2022' : '2022/2023'}</h1>
                         <div className='table__container-wrapper'>
                             <Table hover responsive variant='dark'>
                                 <thead style={{position: "sticky", top: '0'}}>
@@ -114,48 +114,43 @@ export default function TableWithData() {
                                     <th>Result</th>
                                     <th>Half time</th>
                                     <th>Match date</th>
-                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody className='tbody'>
                                 {dataSchedule.map((data) => {
-                                    const {
-                                        sport_event: { competitors, start_time, venue },
-                                        sport_event_status: { home_score, away_score, status, period_scores},
-                                    } = data;
                                     return (
-                                        <tr key={data.sport_event.id}>
+                                        <tr key={data.sport_event.id}
+                                            onClick={() => handleGoToSubpage(data)}
+                                        >
                                             <td>
-                                                {venue.name}
+                                                {data.sport_event.venue.name.replace('Pitkarski', 'Piłkarski')}
                                             </td>
-                                            <td style={{backgroundColor: colorForEachTeam(home_score, away_score).homeTeamColor, fontWeight: '600'}}>
-                                                {competitors[0].name}
+                                            <td style={{backgroundColor: colorForEachTeam(data.sport_event_status.home_score, data.sport_event_status.away_score).homeTeamColor, fontWeight: '600'}}>
+                                                {data.sport_event.competitors[0].name}
                                             </td>
-                                            <td style={{backgroundColor: colorForEachTeam(home_score, away_score).awayTeamColor, fontWeight: '600'}}>
-                                                {competitors[1].name}
+                                            <td style={{backgroundColor: colorForEachTeam(data.sport_event_status.home_score, data.sport_event_status.away_score).awayTeamColor, fontWeight: '600'}}>
+                                                {data.sport_event.competitors[1].name}
                                             </td>
                                             <td style={{textAlign: 'center', fontWeight: '600'}}>
-                                                {status === "postponed" ? status : `${home_score} - ${away_score}`
-                                                }
+                                                {data.sport_event_status.status === 'not_started' ? 'Not started yet!' : <>
+                                                    {data.sport_event_status.status === "postponed" ? data.sport_event_status.status.replace('p', 'P') : `${data.sport_event_status.home_score} - ${data.sport_event_status.away_score}`
+                                                    }
+                                                </>}
+
+
                                             </td>
-                                            {period_scores ? (
+                                            {data.sport_event_status.period_scores ? (
                                                 <td style={{textAlign: 'center'}}>
-                                                    {period_scores[0].home_score} - {period_scores[1].away_score}
+                                                    {data.sport_event_status.period_scores[0].home_score} - {data.sport_event_status.period_scores[1].away_score}
                                                 </td>
-                                            ) : (
+                                            ): (
                                                 <td style={{textAlign: 'center'}}>-</td>
                                             )
-
-
                                             }
                                             <td>
-                                                {start_time.slice(0, 10)}, at {start_time.slice(11, 16)}
-                                            </td>
-                                            <td>
-                                                <Link to="/MatchInfo" state={{ data }} className="table__link">Click for more details</Link>
+                                                {data.sport_event.start_time.slice(0, 10)}, at {data.sport_event.start_time.slice(11, 16)}
                                             </td>
                                         </tr>
-
                                     );
                                 })}
                                 </tbody>

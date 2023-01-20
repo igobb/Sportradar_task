@@ -51,27 +51,40 @@ const MatchInfo = (props) => {
                                         <span>{matchData.competitors[0].name}</span>
                                         <p>(Home)</p>
                                     </div>
-                                    {matchStatus.status === 'postponed' ?
-                                        <div className="match-info__postponed">
-                                            {matchStatus.status}
+                                    {matchStatus.status === 'not_started' ?
+                                        <div className="match-info__not-started">
                                             <span className="result"> - </span>
                                             <p>{matchData.venue.name}</p>
-                                            <p>{matchData.sport_event_context.competition.name}</p>
+                                            <p className="not-started__p">The match will start: <br/> {matchData.start_time.slice(0, 10)}</p>
+                                            <p>{matchData.sport_event_context.competition.name}, round {matchData.sport_event_context.round.number}</p>
                                         </div>
                                         :
-                                        <div className="match-info__result">
-                                            <span className="result">{matchStatus.home_score} - {matchStatus.away_score}</span>
-                                            <p>{matchData.venue.name}</p>
-                                            <p>{matchData.start_time.slice(0, 10)}</p>
-                                            <p>{matchData.sport_event_context.competition.name}</p>
-                                        </div>
+                                        <>
+                                            {matchStatus.status === 'postponed' ?
+                                                <div className="match-info__postponed">
+                                                    Match {matchStatus.status}
+                                                    <span className="result"> - </span>
+                                                    <p>{matchData.venue.name}</p>
+                                                    <p style={{textDecoration: 'line-through', textDecorationThickness: '.2rem'}}>{matchData.start_time.slice(0, 10)}</p>
+                                                    <p>{matchData.sport_event_context.competition.name}, round {matchData.sport_event_context.round.number}</p>
+                                                </div>
+                                                :
+                                                <div className="match-info__result">
+                                                    <span className="result">{matchStatus.home_score} - {matchStatus.away_score}</span>
+                                                    <p>{matchData.venue.name}</p>
+                                                    <p>{matchData.start_time.slice(0, 10)}</p>
+                                                    <p>{matchData.sport_event_context.competition.name}, round {matchData.sport_event_context.round.number}</p>
+                                                </div>
+                                            }
+                                        </>
+
                                     }
                                     <div className="away">
                                         <span>{matchData.competitors[1].name}</span>
                                         <p>(Away)</p>
                                     </div>
                                 </div>
-                                {matchStatus.status === 'postponed' ? null :
+                                {matchStatus.status !== 'postponed' && matchStatus.status !== 'not_started' &&
                                     <div className="match-info__timeline">
                                         <h2>Match minute by minute</h2>
                                         <Table striped bordered hover responsive variant='dark'>

@@ -20,6 +20,10 @@
     max-height: 600px;
 }
 
+.table-hover {
+    cursor: grab;
+}
+
 .table>thead {
     font-size: 1.4rem;
     text-align: center;
@@ -33,13 +37,5 @@
     display: flex;
     flex-direction: column;
 }
-
-.table__link {
-    text-decoration: none !important;
-    font-weight: 600;
-    color: #5CB8E4;
-    transition: all .6s;
-}
-
 
 
