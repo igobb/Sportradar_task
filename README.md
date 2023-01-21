@@ -12,7 +12,7 @@
 ## Introduction
 That is my task for recruitment process.
 I used a CORS Anywhere, becouse CORS Anywhere helps with accessing data from other websites that is normally forbidden by the same origin policy of web browsers. This is done by proxying requests to these sites via a server. 
-To use the API, I just prefixed the URL with the API URL. 
+To use the API, I just prefixed the API URL with the 'https://cors-anywhere.herokuapp.com/'. 
 For example, instead of requesting:
 
 ```
@@ -27,7 +27,7 @@ https://cors-anywhere.herokuapp.com/https://api.sportradar.us/soccer/trial/v4/en
 
 CORS Anywhere will then make the request on behalf of your application, and add CORS headers to the response so that your web application can process the response.
 
-(RECOMMENDED)Other way to request the API: 
+(RECOMMENDED) Other way to request the API:
 
 1. Download and turn on this extension https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=pl
 2. Dont use preceding the API address (https://cors-anywhere.herokuapp.com/), should looks like, for example
