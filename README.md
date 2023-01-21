@@ -11,6 +11,30 @@
 
 ## Introduction
 That is my task for recruitment process.
+I used a CORS Anywhere, becouse CORS Anywhere helps with accessing data from other websites that is normally forbidden by the same origin policy of web browsers. This is done by proxying requests to these sites via a server. 
+To use the API, I just prefixed the URL with the API URL. 
+For example, instead of requesting:
+
+```
+https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz
+```
+
+I requested: 
+
+```
+https://cors-anywhere.herokuapp.com/https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz
+```
+
+CORS Anywhere will then make the request on behalf of your application, and add CORS headers to the response so that your web application can process the response.
+
+Other way to request the API: 
+
+1. Download and turn on this extension https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=pl
+2. Delete every preceding the API address (https://cors-anywhere.herokuapp.com/) in code [in files Table.jsx and MatchInfo,jsx], should looks like, for example
+
+```
+https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz
+```
 
 <details>
   <summary>Task description</summary>
