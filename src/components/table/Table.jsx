@@ -57,7 +57,7 @@ export default function TableWithData() {
     }, [refreshData]);
 
     const handleGoToSubpage = (data) => {
-        navigate("/MatchInfo", {
+        navigate(`/MatchInfo/`, {
             state: {
                 data
             },

@@ -88,17 +88,19 @@
 .match-info__timeline {
     width: 45%;
     max-width: 600px;
+    max-height: 400px;
     margin-top: 2rem;
     text-align: center;
-    color: var(--black-color)
+    color: var(--black-color);
 }
 
 .match-info__timeline>h2 {
     font-size: 1.5rem;
 }
 
-.table-responsive {
-    max-height: 500px;
+.match-info__timeline-table {
+    overflow-x: auto;
+    max-height: 400px;
 }
 
 .match-info__table>thead {
