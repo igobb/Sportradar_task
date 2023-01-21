@@ -3,6 +3,7 @@ import {Link, useLocation} from 'react-router-dom';
 import axios from "axios";
 import './MatchInfo.css'
 import Table from 'react-bootstrap/Table';
+import Error from '../../components/error/Error';
 
 const MatchInfo = (props) => {
     const [matchData, setMatchData] = useState(null);
@@ -29,12 +30,49 @@ const MatchInfo = (props) => {
                 setErrorData(error)
                 if(error.request.status < 600 && error.request.status > 399) {
                     console.log(`${error.message}, error code: ${error.code}`);
-                    //If the error is in a different range, print it to the console
                 } else {
                     console.log(error)
                 }
             });
     }, []);
+
+    const getMatchStartedStatus = (matchStatus, matchData) => {
+        return <div className="match-info__not-started">
+            <span className="result"> - </span>
+            <p>{data.sport_event.venue.name.replace('Pitkarski', 'Piłkarski')}</p>
+            <p className="not-started__p">The match will start: <br/> {matchData.start_time.slice(0, 10)}</p>
+            <p>{matchData.sport_event_context.competition.name}, round {matchData.sport_event_context.round.number}</p>
+        </div>;
+    }
+
+    const getEndedMatchStatus = (matchStatus, matchData) => {
+        return  <div className="match-info__result">
+            <span className="result">{matchStatus.home_score} - {matchStatus.away_score}</span>
+            <p>{data.sport_event.venue.name.replace('Pitkarski', 'Piłkarski')}</p>
+            <p>{matchData.start_time.slice(0, 10)}</p>
+            <p>{matchData.sport_event_context.competition.name}, round {matchData.sport_event_context.round.number}</p>
+        </div>;
+    }
+
+    const getPostponedMatchStatus = (matchStatus, matchData) => {
+        return <div className="match-info__postponed">
+            Match {matchStatus.status}
+            <span className="result"> - </span>
+            <p>{data.sport_event.venue.name.replace('Pitkarski', 'Piłkarski')}</p>
+            <p style={{textDecoration: 'line-through', textDecorationThickness: '.2rem'}}>{matchData.start_time.slice(0, 10)}</p>
+            <p>{matchData.sport_event_context.competition.name}, round {matchData.sport_event_context.round.number}</p>
+        </div>;
+    }
+
+    const getCancelledMatchStatus = (matchStatus, matchData) => {
+        return <div className="match-info__cancelled">
+            Match {matchStatus.status}
+            <span className="result"> - </span>
+            <p>{data.sport_event.venue.name.replace('Pitkarski', 'Piłkarski')}</p>
+            <p style={{textDecoration: 'line-through', textDecorationThickness: '.2rem'}}>{matchData.start_time.slice(0, 10)}</p>
+            <p>{matchData.sport_event_context.competition.name}, round {matchData.sport_event_context.round.number}</p>
+        </div>;
+    }
 
     return (
         <>
@@ -43,7 +81,7 @@ const MatchInfo = (props) => {
                     <>
                         <div className='match-info__container'>
                             <div className='match-info__link-wrapper'>
-                                <Link className="match-info__link" to="/"><button className='match-info__link-button'>Return to home page</button></Link>
+                                <Link className="match-info__link" to="/Sportradar_task"><button className='match-info__link-button'>Return to home page</button></Link>
                             </div>
                             <div className="match-info__data">
                                 <div className="data-wrapper">
@@ -51,43 +89,26 @@ const MatchInfo = (props) => {
                                         <span>{matchData.competitors[0].name}</span>
                                         <p>(Home)</p>
                                     </div>
-                                    {matchStatus.status === 'not_started' ?
-                                        <div className="match-info__not-started">
-                                            <span className="result"> - </span>
-                                            <p>{matchData.venue.name}</p>
-                                            <p className="not-started__p">The match will start: <br/> {matchData.start_time.slice(0, 10)}</p>
-                                            <p>{matchData.sport_event_context.competition.name}, round {matchData.sport_event_context.round.number}</p>
-                                        </div>
+                                    {matchStatus.status === 'not_started' ? getMatchStartedStatus(matchStatus, matchData)
                                         :
                                         <>
-                                            {matchStatus.status === 'postponed' ?
-                                                <div className="match-info__postponed">
-                                                    Match {matchStatus.status}
-                                                    <span className="result"> - </span>
-                                                    <p>{matchData.venue.name}</p>
-                                                    <p style={{textDecoration: 'line-through', textDecorationThickness: '.2rem'}}>{matchData.start_time.slice(0, 10)}</p>
-                                                    <p>{matchData.sport_event_context.competition.name}, round {matchData.sport_event_context.round.number}</p>
-                                                </div>
+                                            {matchStatus.status === 'postponed' ? getPostponedMatchStatus(matchStatus, matchData)
                                                 :
-                                                <div className="match-info__result">
-                                                    <span className="result">{matchStatus.home_score} - {matchStatus.away_score}</span>
-                                                    <p>{matchData.venue.name}</p>
-                                                    <p>{matchData.start_time.slice(0, 10)}</p>
-                                                    <p>{matchData.sport_event_context.competition.name}, round {matchData.sport_event_context.round.number}</p>
-                                                </div>
+                                                matchStatus.status === 'cancelled' ? getCancelledMatchStatus(matchStatus, matchData)
+                                                    :
+                                                    getEndedMatchStatus(matchStatus, matchData)
                                             }
                                         </>
-
                                     }
                                     <div className="away">
                                         <span>{matchData.competitors[1].name}</span>
                                         <p>(Away)</p>
                                     </div>
                                 </div>
-                                {matchStatus.status !== 'postponed' && matchStatus.status !== 'not_started' &&
+                                {matchStatus.status === 'closed' &&
                                     <div className="match-info__timeline">
                                         <h2>Match minute by minute</h2>
-                                        <Table striped bordered hover responsive variant='dark'>
+                                        <Table striped bordered hover responsive variant='dark' className="match-info__table">
                                             <thead>
                                             <tr>
                                                 <th>Minute</th>
@@ -97,9 +118,9 @@ const MatchInfo = (props) => {
                                             <tbody>
                                             {timeline.map((event) => {
                                                 return (
-                                                    <tr>
+                                                    <tr key={event.id}>
                                                         <td>{event.match_time ? event.match_time + '\'' : event.time.slice(11, 16)}</td>
-                                                        <td>{ event.type.replace('_', ' ').replace('_', ' ') }</td>
+                                                        <td>{event.type[0].toUpperCase() + event.type.replace(/_/g, ' ').substring(1)}</td>
                                                     </tr>
                                                 )
                                             })
@@ -112,14 +133,7 @@ const MatchInfo = (props) => {
                         </div>
                     </>
                     :
-                    <div className="error">
-                        {errorData ?
-                            <>
-                                <h1>Sorry, we have a problem...</h1>
-                                <p>{errorData?.message}</p>
-                            </>: null
-                        }
-                    </div>
+                    <Error errorData={errorData}></Error>
                 }
             </>
             }

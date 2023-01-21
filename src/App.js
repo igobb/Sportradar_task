@@ -10,7 +10,7 @@ function App() {
     <div className="App">
         <Router>
             <Routes>
-                <Route path="/" element={<TableWithData />}/>
+                <Route path="/Sportradar_task" element={<TableWithData />}/>
                 <Route path="/MatchInfo" element={<MatchInfo />} />
                 <Route path="*" element={<ErrorPage />}/>
             </Routes>

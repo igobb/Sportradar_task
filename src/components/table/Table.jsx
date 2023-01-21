@@ -4,7 +4,8 @@ import './Table.css'
 
 import Table from 'react-bootstrap/Table';
 import Dropdown from 'react-bootstrap/Dropdown';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import Error from '../error/Error';
 
 export default function TableWithData() {
     const [dataSchedule, setDataSchedule] = useState(null);
@@ -12,7 +13,6 @@ export default function TableWithData() {
     const [whichSeason, setWhichSeason] = useState('sr:season:77453')
     const [refreshData, setRefreshData] = useState(false);
     const navigate = useNavigate();
-
     const [loading, setLoading] = useState(true);
     const [errorData, setErrorData] = useState()
 
@@ -32,7 +32,6 @@ export default function TableWithData() {
                 setErrorData(error)
                 if(error.request.status < 600 && error.request.status > 399) {
                     console.log(`${error.message}, error code: ${error.code}`);
-                    //If the error is in a different range, print it to the console
                 } else {
                     console.log(error)
                 }
@@ -51,7 +50,6 @@ export default function TableWithData() {
                 setErrorData(error)
                 if(error.request.status < 600 && error.request.status > 399) {
                     console.log(`${error.message}, error code: ${error.code}`);
-                    //If the error is in a different range, print it to the console
                 } else {
                     console.log(error)
                 }
@@ -73,14 +71,22 @@ export default function TableWithData() {
         if (homeScore === awayScore) return { homeTeamColor: "#EB5E0B", awayTeamColor: "#EB5E0B" };
         return 0;
     }
-    console.log(dataSchedule)
+
+    const getResult = (sportEventStatus) => {
+        const status = sportEventStatus.status;
+        if (status === "not_started") return 'Not started yet!';
+        if (status === "postponed") return 'Postponed';
+        if (status === "cancelled") return 'Canceled';
+        return `${sportEventStatus.home_score} - ${sportEventStatus.away_score}`;
+    }
+
     return (
         <>
         {loading ? <h1>Loading...</h1> :
             <>
                 { (dataSchedule) && (dataSeasons) ? <>
-                    <div className="table__container">
-                        <Dropdown className="table__container-dropdown">
+                    <div className="table-container">
+                        <Dropdown className="table-container__dropdown">
                             <Dropdown.Toggle variant="dark" id="dropdown-basic">
                                 Seasons
                             </Dropdown.Toggle>
@@ -99,8 +105,8 @@ export default function TableWithData() {
                             </Dropdown.Menu>
                         </Dropdown>
                         <h1>Selected season: {whichSeason === 'sr:season:77453' ? '2020/2021' : whichSeason === 'sr:season:84320' ? '2021/2022' : '2022/2023'}</h1>
-                        <div className='table__container-wrapper'>
-                            <Table hover responsive variant='dark'>
+                        <div className='table-container__wrapper'>
+                            <Table hover responsive variant='dark' className="table-container__data">
                                 <thead style={{position: "sticky", top: '0'}}>
                                 <tr>
                                     <th>Stadium name</th>
@@ -116,7 +122,7 @@ export default function TableWithData() {
                                     <th>Match date</th>
                                 </tr>
                                 </thead>
-                                <tbody className='tbody'>
+                                <tbody className='table-container__tbody'>
                                 {dataSchedule.map((data) => {
                                     return (
                                         <tr key={data.sport_event.id}
@@ -132,12 +138,7 @@ export default function TableWithData() {
                                                 {data.sport_event.competitors[1].name}
                                             </td>
                                             <td style={{textAlign: 'center', fontWeight: '600'}}>
-                                                {data.sport_event_status.status === 'not_started' ? 'Not started yet!' : <>
-                                                    {data.sport_event_status.status === "postponed" ? data.sport_event_status.status.replace('p', 'P') : `${data.sport_event_status.home_score} - ${data.sport_event_status.away_score}`
-                                                    }
-                                                </>}
-
-
+                                                {getResult(data.sport_event_status)}
                                             </td>
                                             {data.sport_event_status.period_scores ? (
                                                 <td style={{textAlign: 'center'}}>
@@ -159,14 +160,7 @@ export default function TableWithData() {
                     </div>
                 </>
                 :
-                    <div className="error">
-                        {errorData ?
-                            <>
-                                <h1>Sorry, we have a problem...</h1>
-                                <p>{errorData?.message}</p>
-                            </>: null
-                        }
-                    </div>
+                    <Error errorData={errorData}></Error>
                 }
             </>
         }
