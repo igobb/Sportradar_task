@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Sportradar_task/static/css/main.e4c66e5e.css",
-    "main.js": "/Sportradar_task/static/js/main.9be68405.js",
+    "main.js": "/Sportradar_task/static/js/main.0a697a62.js",
     "index.html": "/Sportradar_task/index.html",
     "main.e4c66e5e.css.map": "/Sportradar_task/static/css/main.e4c66e5e.css.map",
-    "main.9be68405.js.map": "/Sportradar_task/static/js/main.9be68405.js.map"
+    "main.0a697a62.js.map": "/Sportradar_task/static/js/main.0a697a62.js.map"
   },
   "entrypoints": [
     "static/css/main.e4c66e5e.css",
-    "static/js/main.9be68405.js"
+    "static/js/main.0a697a62.js"
   ]
 }
