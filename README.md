@@ -11,30 +11,6 @@
 
 ## Introduction
 That is my task for recruitment process.
-I used a CORS Anywhere, becouse CORS Anywhere helps with accessing data from other websites that is normally forbidden by the same origin policy of web browsers. This is done by proxying requests to these sites via a server. 
-To use the API, I just prefixed the URL with the API URL. 
-For example, instead of requesting:
-
-```
-https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz
-```
-
-I requested: 
-
-```
-https://cors-anywhere.herokuapp.com/https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz
-```
-
-CORS Anywhere will then make the request on behalf of your application, and add CORS headers to the response so that your web application can process the response.
-
-Other way to request the API: 
-
-1. Download and turn on this extension https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=pl
-2. Delete every preceding the API address (https://cors-anywhere.herokuapp.com/) in code [in files Table.jsx and MatchInfo,jsx], should looks like, for example
-
-```
-https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz
-```
 
 <details>
   <summary>Task description</summary>
@@ -110,6 +86,32 @@ In this step you’re free to add whatever features you like, think about refact
 </details>
 
 
+I used a CORS Anywhere, becouse CORS Anywhere helps with accessing data from other websites that is normally forbidden by the same origin policy of web browsers. This is done by proxying requests to these sites via a server. 
+To use the API, I just prefixed the API URL with the 'https://cors-anywhere.herokuapp.com/'. 
+For example, instead of requesting:
+
+```
+https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz
+```
+
+I requested: 
+
+```
+https://cors-anywhere.herokuapp.com/https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz
+```
+
+CORS Anywhere will then make the request on behalf of your application, and add CORS headers to the response so that your web application can process the response.
+
+(RECOMMENDED) Other way to request the API:
+
+1. Download and turn on this extension https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=pl
+2. Dont use preceding the API address (https://cors-anywhere.herokuapp.com/), should looks like, for example
+
+```
+https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz
+```
+
+
 ## Technologies Used
 * React
 * React Bootstrap
@@ -118,7 +120,7 @@ In this step you’re free to add whatever features you like, think about refact
 * Cors anywhere heroku app (https://cors-anywhere.herokuapp.com)
 
 ## Setup
-To run this project, go to this page - https://cors-anywhere.herokuapp.com/corsdemo, when it opens, click on the button "Request temporary access to the demo server". After open this link:
+To run this project, turn on 'Allow CORS: Access-Control-Allow-Origin' extension and open this link:
 
 ⭐ <a href="">Sportradar task</a> ⭐
 
@@ -126,7 +128,11 @@ or follow these steps:
 
 1. Clone the repository to your local machine.
 2. Open the 'Sportradar_task' directory as a project in your IDE.
-3. Go to this page - https://cors-anywhere.herokuapp.com/corsdemo, when it opens, click on the button "Request temporary access to the demo server".
+3. If you want to use Cors Anywhere - Go to this page - https://cors-anywhere.herokuapp.com/corsdemo, when it opens, click on the button "Request temporary access to the demo server". In code [Table.jsx and MatchInfo.jsx] just prefixed the API URL with the 'ttps://cors-anywhere.herokuapp.com/' (EXAMPLE: https://cors-anywhere.herokuapp.com/https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz)
+
+If you dont want to use Cors Anywhere, make sure you turn on 'Allow CORS: Access-Control-Allow-Origin' extension.
+
+
 4. In the terminal, enter one of the following commands:
 
 ```
