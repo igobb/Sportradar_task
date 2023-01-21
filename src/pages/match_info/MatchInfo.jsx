@@ -15,7 +15,7 @@ const MatchInfo = (props) => {
     const data = location.state?.data;
     const id = data.sport_event.id
 
-    const apiMatchInfo = `https://cors-anywhere.herokuapp.com/https://api.sportradar.us/soccer/trial/v4/en/sport_events/${id}/timeline.json?api_key=cwy2c5a7sxaeyjspgucjtkgz`;
+    const apiMatchInfo = `https://api.sportradar.us/soccer/trial/v4/en/sport_events/${id}/timeline.json?api_key=cwy2c5a7sxaeyjspgucjtkgz`;
 
     useEffect(() => {
         axios
