@@ -94,7 +94,7 @@ In this step you’re free to add whatever features you like, think about refact
 * Cors anywhere heroku app (https://cors-anywhere.herokuapp.com)
 
 ## Setup
-To run this project, go to this page - https://cors-anywhere.herokuapp.com/corsdemo, when it opens, click on the button "Request temporary access to the demo server". After this open this link:
+To run this project, go to this page - https://cors-anywhere.herokuapp.com/corsdemo, when it opens, click on the button "Request temporary access to the demo server". After open this link:
 
 ⭐ <a href="">Sportradar task</a> ⭐
 
