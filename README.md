@@ -129,6 +129,7 @@ or follow these steps:
 1. Clone the repository to your local machine.
 2. Open the 'Sportradar_task' directory as a project in your IDE.
 3. If you want to use Cors Anywhere - Go to this page - https://cors-anywhere.herokuapp.com/corsdemo, when it opens, click on the button "Request temporary access to the demo server". In code [Table.jsx and MatchInfo.jsx] just prefixed the API URL with the 'ttps://cors-anywhere.herokuapp.com/' (EXAMPLE: https://cors-anywhere.herokuapp.com/https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/seasons.json?api_key=cwy2c5a7sxaeyjspgucjtkgz)
+
 If you dont want to use Cors Anywhere, make sure you turn on 'Allow CORS: Access-Control-Allow-Origin' extension.
 4. In the terminal, enter one of the following commands:
 
