@@ -40,7 +40,7 @@ const MatchInfo = (props) => {
         return <div className="match-info__not-started">
             <span className="result"> - </span>
             <p>{data.sport_event.venue.name.replace('Pitkarski', 'Piłkarski')}</p>
-            <p className="not-started__p">The match will start: <br/> {matchData.start_time.slice(0, 10)}</p>
+            <p className="not-started__p">The match will start: <br/> {matchData.start_time.slice(0, 10)},<br/> at {matchData.start_time.slice(11, 16)} </p>
             <p>{matchData.sport_event_context.competition.name}, round {matchData.sport_event_context.round.number}</p>
         </div>;
     }
