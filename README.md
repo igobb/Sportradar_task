@@ -120,7 +120,7 @@ https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/sea
 * Cors anywhere heroku app (https://cors-anywhere.herokuapp.com)
 
 ## Setup
-To run this project, turn on 'Allow CORS: Access-Control-Allow-Origin' extension and open this link:
+To run this project, turn on 'Allow CORS: Access-Control-Allow-Origin' extension and click this link:
 
 ⭐ <a href="https://igobb.github.io/Sportradar_task">Sportradar task</a> ⭐
 
