@@ -124,6 +124,8 @@ To run this project, turn on 'Allow CORS: Access-Control-Allow-Origin' extension
 
 ⭐ <a href="https://igobb.github.io/Sportradar_task">Sportradar task</a> ⭐
 
+IF YOU SEE AN ERROR SCREEN, JUST REFRESH PAGE
+
 or follow these steps:
 
 1. Clone the repository to your local machine.
