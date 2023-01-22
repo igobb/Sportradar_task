@@ -122,7 +122,7 @@ https://api.sportradar.us/soccer/trial/v4/en/competitions/sr:competition:202/sea
 ## Setup
 To run this project, turn on 'Allow CORS: Access-Control-Allow-Origin' extension and open this link:
 
-⭐ <a href="">Sportradar task</a> ⭐
+⭐ <a href="https://igobb.github.io/Sportradar_task">Sportradar task</a> ⭐
 
 or follow these steps:
 
