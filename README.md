@@ -1,6 +1,9 @@
 # Sportradar recruitment task
 
 
+As the time to complete the task has passed, I don't want to make any changes to this repository, but I want to develope this project. If you want to see the development of the application and the latest version, go to <a href="https://github.com/igobb/Sportradar_task_UPDATED">THIS UPDATED</a> repository.
+
+
 ## About
 * [Introduction](#introduction)
 * [Technologies](#technologies-used)
